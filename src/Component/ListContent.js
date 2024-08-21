@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BsQrCode } from "react-icons/bs";
 import { FaRegCopy } from "react-icons/fa6";
 import { IoIosCloseCircle } from "react-icons/io";
+import QrCode from "./QrCode";
 
 const ListContent = () => {
   const url = "google.comaslkdjf;lsjd;lksjflslkdklf";
@@ -38,6 +39,8 @@ const ListContent = () => {
           <div
             className="col-sm-5  d-flex justify-content-center align-items-center text-center m-2"
             title="QR Code"
+            data-bs-toggle="modal"
+            data-bs-target="#qr-code"
             style={{ cursor: "pointer" }}
           >
             <BsQrCode size={30} />
@@ -59,11 +62,15 @@ const ListContent = () => {
         </div>
       </div>
       <div
-        className=" close d-flex justify-content-center align-items-center ms-2
+        className=" close d-flex justify-content-center align-items-center ms-2 ms-md-4 ms-lg-2
          col-sm-1"
         style={{ cursor: "pointer" }}
       >
         <IoIosCloseCircle size={30} />
+      </div>
+
+      <div className="modal fade " id="qr-code" tabIndex="-1">
+        <QrCode />
       </div>
     </div>
   );

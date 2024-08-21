@@ -1,30 +1,49 @@
 import React from "react";
 
+import { QRCodeSVG } from "qrcode.react";
+
 const QrCode = () => {
+  const url = "https://g-sabareesh.github.io/SS-Portfolio/";
   return (
-    <div className="bg-primary">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">
-              Modal title
-            </h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+    <div className="modal-dialog modal-dialog-centered">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h1 className="modal-title fs-5" id="qr-code">
+            QR Code - for your url
+          </h1>
+          <button
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div className="modal-body">
+          <div className="text-center">
+            <QRCodeSVG
+              value={url}
+              size={150}
+              bgColor={"#ffffff"}
+              fgColor={"#000000"}
+              level={"H"}
+              includeMargin={false}
+              imageSettings={{
+                src: "https://g-sabareesh.github.io/SS-Portfolio/images/boy.png",
+                x: undefined,
+                y: undefined,
+                height: 44,
+                width: 44,
+                excavate: false,
+              }}
+            />
           </div>
-          <div class="modal-body">...</div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
+        </div>
+        <div className="text-center">
+          <div className="text-center">
+            <div className="model-body">URL : {"dummy url here"}</div>
+          </div>
+          <div className="model-body">
+            scan this qr code to redirect the webpage
           </div>
         </div>
       </div>
