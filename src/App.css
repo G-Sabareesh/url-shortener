@@ -1,5 +1,5 @@
 .App {
-  background-color: #282828;
+  background-color: #263849;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,11 +8,12 @@
 }
 
  .close{
-  color: white;
+  color: #0d6efd;
 } 
 
 .close:hover{
-  color: #48ff7c !important;
+  /* color: #48ff7c !important; */
+  color: #ff5454 !important;
 }
 
 .close:hover::after{
@@ -23,15 +24,21 @@
   font-size: large;
 }
 
- /* @media (max-width: 450px){
+ @media (max-width: 450px){
   .close {
     position: absolute;
     top: -10%;
     right: -2%;
-    border-radius: 50px !important; 
-    color: black;
+    border-radius: 50px !important;
   }
-} */
+  .close:hover::after{
+    position: absolute;
+    top:70%;
+    content: '';
+    font-weight: 600;
+    font-size: large;
+  }
+}
 /*@media (max-width: 1000px){
   .close {
     position: absolute;

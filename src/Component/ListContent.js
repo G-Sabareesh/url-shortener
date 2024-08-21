@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsQrCode } from "react-icons/bs";
 import { FaRegCopy } from "react-icons/fa6";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 
 const ListContent = () => {
   const url = "google.comaslkdjf;lsjd;lksjflslkdklf";
+
+  const [copyColor, setCopyColor] = useState(false);
+
+  function copyFunction() {
+    navigator.clipboard.writeText(url).then(() => {
+      setCopyColor(true);
+    });
+    setTimeout(() => {
+      setCopyColor(false);
+    }, 2000);
+  }
 
   return (
     <div
@@ -24,16 +35,31 @@ const ListContent = () => {
           </div>
         </div>
         <div className="d-flex justify-content-center align-items-center text-center col-sm-3  flex-wrap">
-          <div className="col-sm-5  d-flex justify-content-center align-items-center text-center m-2" title="QR Code" style={{cursor:'pointer'}}>
+          <div
+            className="col-sm-5  d-flex justify-content-center align-items-center text-center m-2"
+            title="QR Code"
+            style={{ cursor: "pointer" }}
+          >
             <BsQrCode size={30} />
           </div>
-          <div className="col-sm-5  d-flex justify-content-center align-items-center text-center m-2" title="Copy" style={{cursor:'pointer'}}>
-            <FaRegCopy size={30} />
+          <div
+            className="col-sm-5  d-flex justify-content-center align-items-center text-center m-2"
+            title="Copy"
+            style={{ cursor: "pointer" }}
+            onClick={copyFunction}
+          >
+            {copyColor ? (
+              <>
+                <span className="text-success fs-5 fw-semibold">Copied</span>
+              </>
+            ) : (
+              <FaRegCopy size={30} color="black" />
+            )}
           </div>
         </div>
       </div>
       <div
-        className=" close d-flex justify-content-center align-items-center ms-1 col-md-1"
+        className=" close d-flex justify-content-center align-items-center ms-4 col-md-1"
         style={{ cursor: "pointer" }}
       >
         <IoMdCloseCircleOutline size={30} />

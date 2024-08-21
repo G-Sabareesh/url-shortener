@@ -7,7 +7,7 @@ const Main = () => {
   return (
     <div
       className="d-flex justify-content-center align-items-center rounded flex-column col-12"
-      style={{ height: "100%", backgroundColor: "#1987547d" }}
+      style={{ height: "100%", backgroundColor: "" }}
     >
       <Heading />
       <Form />
