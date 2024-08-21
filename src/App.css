@@ -7,15 +7,39 @@
   width: 100%;
 }
 
-@media (max-width: 780px) {
+ .close{
+  color: white;
+} 
+
+.close:hover{
+  color: #48ff7c !important;
+}
+
+.close:hover::after{
+  position: absolute;
+  top:70%;
+  content: 'Delete';
+  font-weight: 600;
+  font-size: large;
+}
+
+ /* @media (max-width: 450px){
   .close {
-    /* Your custom styles here */
+    position: absolute;
+    top: -10%;
+    right: -2%;
+    border-radius: 50px !important; 
+    color: black;
+  }
+} */
+/*@media (max-width: 1000px){
+  .close {
     position: absolute;
     top: -10%;
     right: -5%;
     height: 25px !important;
     width: 25px !important;
     border-radius: 50px !important;
-    color: red; /* Example style */
+    color: red; 
   }
-}
+} */
