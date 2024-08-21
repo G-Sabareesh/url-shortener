@@ -59,7 +59,8 @@ const ListContent = () => {
         </div>
       </div>
       <div
-        className=" close d-flex justify-content-center align-items-center ms-4 col-md-1"
+        className=" close d-flex justify-content-center align-items-center ms-2
+         col-md-1"
         style={{ cursor: "pointer" }}
       >
         <IoMdCloseCircleOutline size={30} />
