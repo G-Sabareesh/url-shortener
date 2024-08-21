@@ -3,8 +3,8 @@ import ListContent from "./ListContent";
 
 const List = () => {
   return (
-    <div className="container d-flex align-items-center justify-content-start col-sm-8 h-50 p-2 flex-column overflow-auto gap-3">
-        <ListContent />
+    <div className="container d-flex align-items-center justify-content-start flex-column col-sm-8 h-50 p-2 overflow-y-auto overflow-x-hidden gap-3">
+      <ListContent />
     </div>
   );
 };

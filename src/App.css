@@ -7,46 +7,42 @@
   width: 100%;
 }
 
- .close{
+.close {
   color: #0d6efd;
-} 
+}
 
-.close:hover{
+.close:hover {
   /* color: #48ff7c !important; */
   color: #ff5454 !important;
 }
 
-.close:hover::after{
+.close:hover::after {
   position: absolute;
-  top:70%;
-  content: 'Delete';
+  top: 70%;
+  content: "Delete";
   font-weight: 600;
   font-size: large;
 }
 
- @media (max-width: 450px){
+@media (max-width: 450px) {
   .close {
     position: absolute;
-    top: -10%;
-    right: -2%;
+    left: -4% !important;
+    top: -8% !important;
     border-radius: 50px !important;
   }
-  .close:hover::after{
-    position: absolute;
-    top:70%;
-    content: '';
-    font-weight: 600;
-    font-size: large;
+  .close:hover::after {
+    content: "";
   }
 }
-/*@media (max-width: 1000px){
+@media (max-width: 575px) {
   .close {
     position: absolute;
-    top: -10%;
-    right: -5%;
-    height: 25px !important;
-    width: 25px !important;
+    left: -1%;
+    top: 0;
     border-radius: 50px !important;
-    color: red; 
   }
-} */
+  .close:hover::after {
+    content: "";
+  }
+}

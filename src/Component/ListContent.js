@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BsQrCode } from "react-icons/bs";
 import { FaRegCopy } from "react-icons/fa6";
-import { IoMdCloseCircleOutline } from "react-icons/io";
+import { IoIosCloseCircle } from "react-icons/io";
 
 const ListContent = () => {
   const url = "google.comaslkdjf;lsjd;lksjflslkdklf";
@@ -19,22 +19,22 @@ const ListContent = () => {
 
   return (
     <div
-      className="col-sm-10 d-flex justify-content-center align-items-center  rounded position-relative"
+      className="position-relative d-flex justify-content-center align-items-center col-sm-10 rounded"
       style={{ minHeight: "20%" }}
     >
       <div
-        className=" d-flex justify-content-center align-items-center bg-light col-sm-11 bordered rounded"
+        className="d-flex justify-content-evenly align-items-center  col-sm-11 bordered rounded bg-light"
         style={{ minHeight: "100%" }}
       >
-        <div className=" d-flex flex-wrap justify-content-center col-9">
-          <div className=" d-flex  justify-content-start align-items-center p-2 col-sm-6 overflow-hidden">
+        <div className=" d-flex flex-wrap justify-content-center col-sm-7 col-md-8">
+          <div className=" d-flex  justify-content-start align-items-center p-2 col-sm-5 col-md-7 col-lg-6 overflow-hidden">
             <a href={url}>{url}</a>
           </div>
-          <div className="d-flex  justify-content-start align-items-center p-2 col-sm-6 overflow-hidden">
+          <div className="d-flex  justify-content-start align-items-center p-2 col-sm-5 col-md-7 col-lg-6 overflow-hidden">
             <a href={url}>{url}</a>
           </div>
         </div>
-        <div className="d-flex justify-content-center align-items-center text-center col-sm-3  flex-wrap">
+        <div className="d-flex justify-content-center align-items-center flex-wrap text-center col-sm-3 col-md-2 col-lg-3 ">
           <div
             className="col-sm-5  d-flex justify-content-center align-items-center text-center m-2"
             title="QR Code"
@@ -60,10 +60,10 @@ const ListContent = () => {
       </div>
       <div
         className=" close d-flex justify-content-center align-items-center ms-2
-         col-md-1"
+         col-sm-1"
         style={{ cursor: "pointer" }}
       >
-        <IoMdCloseCircleOutline size={30} />
+        <IoIosCloseCircle size={30} />
       </div>
     </div>
   );
