@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { BsQrCode } from "react-icons/bs";
 import { FaRegCopy } from "react-icons/fa6";
 import { IoIosCloseCircle } from "react-icons/io";
 import QrCode from "./QrCode";
+import UrlContext from "../DataContent/UrlContext";
 
-const ListContent = () => {
-  const url = "google.comaslkdjf;lsjd;lksjflslkdklf";
-
+const ListContent = ({ item }) => {
   const [copyColor, setCopyColor] = useState(false);
+  const { backendUrl, handleDelete } = useContext(UrlContext);
 
   function copyFunction() {
-    navigator.clipboard.writeText(url).then(() => {
+    navigator.clipboard.writeText(backendUrl + item.shortenUrl).then(() => {
       setCopyColor(true);
     });
     setTimeout(() => {
@@ -29,10 +29,16 @@ const ListContent = () => {
       >
         <div className=" d-flex flex-wrap justify-content-center col-sm-7 col-md-8">
           <div className=" d-flex  justify-content-start align-items-center p-2 col-sm-5 col-md-7 col-lg-6 overflow-hidden">
-            <a href={url}>{url}</a>
+            <a href={item.actualUrl}>{item.actualUrl}</a>
           </div>
           <div className="d-flex  justify-content-start align-items-center p-2 col-sm-5 col-md-7 col-lg-6 overflow-hidden">
-            <a href={url}>{url}</a>
+            <a
+              href={backendUrl + item.shortenUrl}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {backendUrl + item.shortenUrl}
+            </a>
           </div>
         </div>
         <div className="d-flex justify-content-center align-items-center flex-wrap text-center col-sm-3 col-md-2 col-lg-3 ">
@@ -65,12 +71,13 @@ const ListContent = () => {
         className=" close d-flex justify-content-center align-items-center ms-2 ms-md-4 ms-lg-2
          col-sm-1"
         style={{ cursor: "pointer" }}
+        onClick={() => handleDelete(item.shortenUrl)}
       >
         <IoIosCloseCircle size={30} />
       </div>
 
       <div className="modal fade " id="qr-code" tabIndex="-1">
-        <QrCode />
+        <QrCode url={backendUrl + item.shortenUrl} />
       </div>
     </div>
   );

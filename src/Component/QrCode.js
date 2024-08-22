@@ -2,8 +2,7 @@ import React from "react";
 
 import { QRCodeSVG } from "qrcode.react";
 
-const QrCode = () => {
-  const url = "https://g-sabareesh.github.io/SS-Portfolio/";
+const QrCode = ({url}) => {
   return (
     <div className="modal-dialog modal-dialog-centered">
       <div className="modal-content">
@@ -40,7 +39,7 @@ const QrCode = () => {
         </div>
         <div className="text-center">
           <div className="text-center">
-            <div className="model-body">URL : {"dummy url here"}</div>
+            <div className="model-body">URL : {url}</div>
           </div>
           <div className="model-body">
             scan this qr code to redirect the webpage
