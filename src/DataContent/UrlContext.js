@@ -8,6 +8,9 @@ const UrlContext = createContext({});
 export const UrlContextProvider = ({ children }) => {
   const [urlValue, setUrlValue] = useState("");
   const [userId, setUserId] = useState("");
+  const [token, setToken] = useState("");
+
+  const [urlData, setUrlData] = useState([]);
 
   const backendUrl =
     "https://be8b-2401-4900-1ce3-c6fc-59a-4e6-2df0-29fb.ngrok-free.app/";
@@ -20,10 +23,10 @@ export const UrlContextProvider = ({ children }) => {
     if (urlValue !== "") {
       console.log(urlValue);
       setUrlValue("");
+      postConnection();
     } else {
       console.log("Please enter the link");
     }
-    serverConnection();
   }
 
   async function serverConnection() {
@@ -35,8 +38,9 @@ export const UrlContextProvider = ({ children }) => {
         withCredentials: true,
       })
       .then((data) => {
-        console.log(data.data.csrfToken);
-        postConnection(data.data.csrfToken);
+        // console.log(data.data.csrfToken);
+        setToken(data.data.csrfToken);
+        // postConnection(data.data.csrfToken);
       })
       .catch((error) => console.log(error));
   }
@@ -53,14 +57,13 @@ export const UrlContextProvider = ({ children }) => {
         }
       }
     }
-    console.log(cookieValue);
+    // console.log(cookieValue);
 
     return cookieValue;
   }
 
-  async function postConnection(value) {
-    console.log(getCookie("XSRF-TOKEN"));
-    console.log(value);
+  async function postConnection() {
+    // console.log(getCookie("XSRF-TOKEN"));
     await fetch(`${backendUrl}addUrl`, {
       method: "POST",
       headers: {
@@ -69,26 +72,117 @@ export const UrlContextProvider = ({ children }) => {
       },
       credentials: "include",
 
-      body: JSON.stringify({ _token: value, user_id: userId }), // Send CSRF token in the body
+      body: JSON.stringify({
+        _token: token,
+        user_id: userId,
+        url_value: urlValue,
+      }), // Send CSRF token in the body
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        // console.log(res);
+        storeResponseData(res);
       })
       .catch((err) => console.log(err));
   }
 
+  // Manual Function generateUserID - storeResponseData(on submit) - storeUrl(store the url in state and localstorage) - getLocalData(get the localstorage url whole data once) -handleDelete
+
+  function generateUserId() {
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+    const charactersLength = characters.length;
+    for (let i = 0; i < 12; i++) {
+      const randomIndex = Math.floor(Math.random() * charactersLength);
+      result += characters[randomIndex];
+    }
+    setUserId(result);
+    localStorage.setItem("url_shorten_user_id", result);
+  }
+
+  function storeResponseData(response) {
+    // console.log(response);
+    if (response.status === 200) {
+      const shortUrl = response.link;
+      storeUrl(shortUrl);
+    }
+  }
+
+  function storeUrl(shortUrl) {
+    setUrlData((prevData) => [
+      ...(Array.isArray(prevData) ? prevData : []),
+      {
+        actualUrl: urlValue,
+        shortenUrl: shortUrl,
+      },
+    ]);
+
+    localStorage.setItem(
+      userId,
+      JSON.stringify([
+        ...(Array.isArray(urlData) ? urlData : []),
+        {
+          actualUrl: urlValue,
+          shortenUrl: shortUrl,
+        },
+      ])
+    );
+  }
+
+  function getLocalData(id) {
+    setUrlData(JSON.parse(localStorage.getItem(id)));
+  }
+
+  async function handleDelete(urlPara) {
+    // console.log(urlPara);
+    await fetch(`${backendUrl}deleteUrl`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-XSRF-TOKEN": getCookie("XSRF-TOKEN"),
+      },
+      credentials: "include",
+
+      body: JSON.stringify({
+        _token: token,
+        url_value: urlPara,
+      }), // Send CSRF token in the body
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 200) {
+          const filterUrl = urlData.filter(
+            (item) => item.shortenUrl !== urlPara
+          );
+          setUrlData(filterUrl);
+          localStorage.setItem(userId, JSON.stringify(filterUrl));
+        }
+      })
+      .catch((err) => console.log(err));
+  }
+  // useEffect initial once for server connection and get the user id localstorage
   useEffect(() => {
-    setUserId("abc123");
+    const id = localStorage.getItem("url_shorten_user_id");
+    if (id) {
+      setUserId(id);
+      getLocalData(id);
+    } else {
+      generateUserId();
+      // localStorage.setItem(userId, []);
+    }
+    serverConnection();
   }, []);
 
   return (
     <UrlContext.Provider
       value={{
-        // csrfToken,
         urlValue,
         handleInput,
         handleSubmit,
+        handleDelete,
+        urlData,
+        backendUrl,
       }}
     >
       {children}
