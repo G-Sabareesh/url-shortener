@@ -3,12 +3,22 @@ import { createContext, useEffect, useState } from "react";
 // import { useId } from "react";
 // import axios from "axios";
 
+import { toast } from "react-toastify";
+
 const UrlContext = createContext({});
 
 export const UrlContextProvider = ({ children }) => {
   const [urlValue, setUrlValue] = useState("");
   const [userId, setUserId] = useState("");
   const [token, setToken] = useState("");
+
+  const [toastid, setToastId] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setToastId(true);
+    }, 4000);
+  }, [toastid]);
 
   const [urlData, setUrlData] = useState([]);
 
@@ -20,12 +30,25 @@ export const UrlContextProvider = ({ children }) => {
   }
 
   function handleSubmit() {
+    const regExp =
+      /^(https?:\/\/|www\.)[A-Za-z0-9]+(\.[A-Za-z0-9]+)*\.(com|in|org)\.[a-zA-Z]+$/;
+
     if (urlValue !== "") {
-      console.log(urlValue);
-      setUrlValue("");
-      postConnection();
+      if (regExp.test(urlValue) === true) {
+        console.log(urlValue);
+        setUrlValue("");
+        postConnection();
+      } else {
+        if (toastid) {
+          setToastId(false);
+          toast.error("Invalid Url");
+        }
+      }
     } else {
-      console.log("Please enter the link");
+      if (toastid) {
+        setToastId(false);
+        toast.info("Please enter the link");
+      }
     }
   }
 
@@ -104,8 +127,11 @@ export const UrlContextProvider = ({ children }) => {
   function storeResponseData(response) {
     // console.log(response);
     if (response.status === 200) {
+      toast.success("Url Shorten Successfully ");
       const shortUrl = response.link;
       storeUrl(shortUrl);
+    } else if (response.status === 400) {
+      toast.error("Invalid Url");
     }
   }
 
@@ -157,6 +183,9 @@ export const UrlContextProvider = ({ children }) => {
           );
           setUrlData(filterUrl);
           localStorage.setItem(userId, JSON.stringify(filterUrl));
+          toast.success("Url Removed Successfully");
+        } else if (res.status === 400) {
+          toast.warning("Url Not-Found");
         }
       })
       .catch((err) => console.log(err));
@@ -169,7 +198,6 @@ export const UrlContextProvider = ({ children }) => {
       getLocalData(id);
     } else {
       generateUserId();
-      // localStorage.setItem(userId, []);
     }
     serverConnection();
   }, []);

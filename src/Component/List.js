@@ -10,6 +10,7 @@ const List = () => {
       {urlData?.map((item, index) => (
         <ListContent key={index} item={item} />
       ))}
+      {urlData.length === 0 && <span className="fs-5 fw-semibold text-white w-100 text-center">No Url Shorten</span>}
     </div>
   );
 };
