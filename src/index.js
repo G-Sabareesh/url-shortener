@@ -6,12 +6,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
 import { UrlContextProvider } from "./DataContent/UrlContext";
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <UrlContextProvider>
-    <App />
-  </UrlContextProvider>
+  <BrowserRouter>
+    <UrlContextProvider>
+        <App />
+    </UrlContextProvider>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -18,7 +18,7 @@ const QrCode = ({url}) => {
           ></button>
         </div>
         <div className="modal-body">
-          <div className="text-center">
+          <div className="text-center py-5">
             <QRCodeSVG
               value={url}
               size={150}

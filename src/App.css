@@ -1,8 +1,9 @@
 .App {
   background-color: #263849;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
   height: 100vh;
   width: 100%;
 }
@@ -23,7 +24,26 @@
   font-weight: 600;
   font-size: large;
 }
-
+.link {
+  color: #fff;
+}
+.link:hover {
+  color: #0d6efd;
+}
+.registration:hover {
+  background-color: #0d6efd;
+  color: white;
+}
+.dropdown-menu {
+  --bs-dropdown-min-width: 150px !important;
+}
+.dropdown-menu[data-bs-popper] {
+  right: 0 !important;
+  left: auto !important;
+}
+.form-control {
+  box-shadow: none !important;
+}
 @media (max-width: 450px) {
   .close {
     position: absolute;

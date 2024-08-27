@@ -21,23 +21,23 @@ const ListContent = ({ item }) => {
   return (
     <div
       className="position-relative d-flex justify-content-center align-items-center col-sm-10 rounded"
-      style={{ minHeight: "20%" }}
+      style={{ minHeight: "90px" }}
     >
       <div
         className="d-flex justify-content-evenly align-items-center  col-sm-11 bordered rounded bg-light"
         style={{ minHeight: "100%" }}
       >
         <div className=" d-flex flex-wrap justify-content-center col-sm-7 col-md-8">
-          <div className=" d-flex  justify-content-start align-items-center p-2 col-sm-5 col-md-7 col-lg-6 overflow-hidden">
+          <div className=" d-flex  justify-content-center align-items-center p-2 col-sm-5 col-md-7 col-lg-8 overflow-hidden">
             <a href={item.actualUrl}>{item.actualUrl}</a>
           </div>
-          <div className="d-flex  justify-content-start align-items-center p-2 col-sm-5 col-md-7 col-lg-6 overflow-hidden">
+          <div className="d-flex  justify-content-center align-items-center p-2 col-sm-5 col-md-7 col-lg-4 overflow-hidden">
             <a
               href={backendUrl + item.shortenUrl}
               rel="noopener noreferrer"
               target="_blank"
             >
-              {backendUrl + item.shortenUrl}
+              {'url.io/' + item.shortenUrl}
             </a>
           </div>
         </div>
