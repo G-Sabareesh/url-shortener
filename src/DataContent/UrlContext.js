@@ -160,7 +160,6 @@ export const UrlContextProvider = ({ children }) => {
       .then((res) => {
         // console.log(res);
         if (res.status === 200) {
-          setPaymentStatus(res.userstatus);
           setLoading(false);
           if (toastid) {
             setToastId(false);
@@ -376,7 +375,7 @@ export const UrlContextProvider = ({ children }) => {
       setRegistration(true);
     } else if (response.status === 203) {
       // navigate("/upgrade");
-      console.log("sdfsdaf");
+      // console.log("sdfsdaf");
       setPaymentStatus(true);
     }
   }
@@ -475,6 +474,7 @@ export const UrlContextProvider = ({ children }) => {
 
   async function handlePayment() {
     // console.log("function 17");
+    setLoading(true);
 
     const stripe = await loadStripe(
       "pk_test_51PsH3a00rtFTtfAP8UxG9Flee1EummlEkhPxHPbG8l3NdauxhIV2yoqDSEuxXdscuKlvV4HBBGP8smI3PQMf71cF00EQSbAJMp"
@@ -507,6 +507,7 @@ export const UrlContextProvider = ({ children }) => {
     if (result.error) {
       console.error(result.error.message);
     }
+    setLoading(false)
   }
   // useEffect initial once for server connection and get the user id localstorage
   useEffect(() => {

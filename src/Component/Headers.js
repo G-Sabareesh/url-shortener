@@ -9,24 +9,24 @@ import { FaUser, FaUserCheck } from "react-icons/fa";
 const Headers = () => {
   const { account, handleLogout } = useContext(UrlContext);
   return (
-    <nav className="d-flex align-items-center navbar bg-secondary col-12">
-      <div className="p-2">
-        <a
-          className="navbar-brand text-light bg-primary rounded-2 p-2"
-          href="/"
-        >
+    <nav
+      className="d-flex align-items-center navbar col-12"
+      style={{ backgroundColor: "rgba(108,117,125,0.31" }}
+    >
+      <div className="p-1 px-3">
+        <a className="navbar-brand text-light rounded-2 p-2" href="/">
           URL Shortener
         </a>
       </div>
-      <div className="d-flex align-items-center justify-content-center dropdown-center p-2">
-        <button
-          className="btn btn-secondary dropdown-toggle px-3 text-center"
+      <div className="d-flex align-items-center justify-content-center dropdown-center p-1">
+        <span
+          className="text-light dropdown-toggle px-3 text-center"
           type="button"
           data-bs-toggle="dropdown"
         >
           <IoSettings size={30} className="m-1" />
-        </button>
-        <ul className="dropdown-menu p-2 mt-1 me-1">
+        </span>
+        <ul className="dropdown-menu p-2 mt-1 me-1">  
           {account ? (
             <>
               <li className="border-bottom">

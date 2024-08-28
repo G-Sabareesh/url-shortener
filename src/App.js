@@ -38,7 +38,7 @@ function App() {
         >
           <div
             className="spinner-border border-5 text-primary"
-            style={{ width: "4rem", height: "4rem" }}
+            style={{ width: "2.5rem", height: "2.5rem" }}
             role="status"
           ></div>
           {/* <span className="fs-4 text-light mt-2">

@@ -52,7 +52,7 @@ const Login = () => {
                 Password
               </span>
               <input
-                type="text"
+                type="password"
                 className="form-control fw-semibold fs-5"
                 placeholder="password"
                 value={password}

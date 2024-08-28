@@ -20,30 +20,30 @@ const ListContent = ({ item }) => {
 
   return (
     <div
-      className="position-relative d-flex justify-content-center align-items-center col-sm-10 rounded"
-      style={{ minHeight: "90px" }}
+      className="position-relative d-flex justify-content-center align-items-center col-sm-10 col-md-8 col-lg-9 rounded"
+      style={{ minHeight: "70px" }}
     >
       <div
         className="d-flex justify-content-evenly align-items-center  col-sm-11 bordered rounded bg-light w-100"
         style={{ minHeight: "100%" }}
       >
-        <div className=" d-flex flex-wrap justify-content-center col-sm-7 col-md-8">
-          <div className=" d-flex  justify-content-center align-items-center p-2 col-sm-5 col-md-7 col-lg-8 overflow-hidden">
+        <div className=" d-flex flex-wrap justify-content-between col-sm-8 col-md-8 col-lg-8 flex-sm-column flex-md-row flex-lg-row">
+          <div className="col-sm-5 col-md-7 col-lg-6 overflow-hidden">
             <a href={item.actualurl}>{item.actualurl}</a>
           </div>
-          <div className="d-flex  justify-content-center align-items-center p-2 col-sm-5 col-md-7 col-lg-4 overflow-hidden">
+          <div className="d-flex justify-content-lg-end justify-content-md-end justify-content-sm-state col-sm-5 col-md-7 col-lg-6 overflow-hidden">
             <a
               href={backendUrl + item.shortenedurl}
               rel="noopener noreferrer"
               target="_blank"
             >
-              {'url.io/' + item.shortenedurl}
+              {"url.io/" + item.shortenedurl}
             </a>
           </div>
         </div>
-        <div className="d-flex justify-content-center align-items-center flex-wrap text-center col-sm-3 col-md-2 col-lg-3 ">
+        <div className="d-flex justify-content-center align-items-center flex-wrap text-center col-sm-4 col-md-3 col-lg-3 ">
           <div
-            className="col-sm-5  d-flex justify-content-center align-items-center text-center m-2"
+            className="col-sm-5 col-md-4  d-flex justify-content-center align-items-center text-center m-2"
             title="QR Code"
             data-bs-toggle="modal"
             data-bs-target="#qr-code"
@@ -52,7 +52,7 @@ const ListContent = ({ item }) => {
             <BsQrCode size={30} />
           </div>
           <div
-            className="col-sm-5  d-flex justify-content-center align-items-center text-center m-2"
+            className="col-sm-5 col-md-4 d-flex justify-content-center align-items-center text-center m-2"
             title="Copy"
             style={{ cursor: "pointer" }}
             onClick={copyFunction}

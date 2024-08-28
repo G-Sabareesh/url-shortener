@@ -27,7 +27,7 @@ const Main = () => {
           <div className="card-group gap-3 col-sm-4 ">
             <div className="card rounded-2 d-flex align-items-center justify-content-center">
               {/* <img src="" alt="priceImage" /> */}
-              <div className="display-3 fw-semibold p-2">Price$10/-</div>
+              <div className="display-3 fw-semibold p-2">$10</div>
               <div className="card-body text-left w-100">
                 <h5 className="card-title">Upgrade to Premium</h5>
                 <p className="card-text">
