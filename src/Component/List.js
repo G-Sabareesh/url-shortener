@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import ListContent from "./ListContent";
 import UrlContext from "../DataContent/UrlContext";
 
@@ -8,7 +8,7 @@ const List = () => {
   return (
     <div
       className="container d-flex align-items-center justify-content-start flex-column col-sm-8  p-2 overflow-y-auto overflow-x-hidden gap-3"
-      style={{ height: "55%" }}
+      style={{ height: "45%" }}
     >
       {urlData?.map((item, index) => (
         <ListContent key={index} item={item} />
