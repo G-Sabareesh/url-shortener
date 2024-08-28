@@ -1,10 +1,10 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { useId } from "react";
-// import axios from "axios";
-
 import { toast } from "react-toastify";
+
+import { loadStripe } from "@stripe/stripe-js";
+// import PriceCard from "../Component/PriceCard";
 
 const UrlContext = createContext({});
 
@@ -13,6 +13,9 @@ export const UrlContextProvider = ({ children }) => {
   const [userId, setUserId] = useState("");
   const [token, setToken] = useState("");
   const [account, setAccount] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const [paymentStatus, setPaymentStatus] = useState(false);
 
   const [error, setError] = useState();
 
@@ -23,6 +26,8 @@ export const UrlContextProvider = ({ children }) => {
   const [toastid, setToastId] = useState(true);
 
   useEffect(() => {
+    // console.log("useeffect 1");
+
     setTimeout(() => {
       setToastId(true);
     }, 4000);
@@ -31,21 +36,21 @@ export const UrlContextProvider = ({ children }) => {
   const [urlData, setUrlData] = useState([]);
 
   const backendUrl =
-    "https://6dad-2401-4900-1ce1-9515-e88a-ddb8-dc5b-4171.ngrok-free.app/";
+    "https://a7fb-2401-4900-1ce0-6f99-2d26-9b2c-468c-a69d.ngrok-free.app/";
 
-  function handleInput(e) {
-    setUrlValue(e.target.value);
-  }
+  // console.log("running");
 
-  function handleSubmit() {
+  function handleSubmit(urlval) {
+    // console.log("function 2");
+
     const regExp =
       /^(https?:\/\/|www\.)[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*\.(com|in|org|ngrok-free.app)/;
 
-    if (urlValue !== "") {
-      if (regExp.test(urlValue)) {
+    if (urlval !== "") {
+      if (regExp.test(urlval)) {
         // console.log(urlValue);
-        setUrlValue("");
-        postConnection();
+        setUrlValue(urlval);
+        postConnection(urlval);
       } else {
         if (toastid) {
           setToastId(false);
@@ -61,6 +66,8 @@ export const UrlContextProvider = ({ children }) => {
   }
 
   function handleLogin(email, password) {
+    // console.log("function 3");
+
     // console.log("ce", email, password);
     if (email === "" || password === "") {
       if (toastid) {
@@ -74,6 +81,8 @@ export const UrlContextProvider = ({ children }) => {
   }
 
   function handleSignup(name, email, password) {
+    // console.log("function 4");
+
     if ((name === "") | (email === "") || password === "") {
       if (toastid) {
         setToastId(false);
@@ -86,6 +95,9 @@ export const UrlContextProvider = ({ children }) => {
   }
 
   async function handleLogout() {
+    // console.log("function 5");
+
+    setLoading(true);
     await fetch(`${backendUrl}user/logout`, {
       method: "POST",
       headers: {
@@ -100,15 +112,18 @@ export const UrlContextProvider = ({ children }) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.status === 200) {
+          setLoading(false);
           if (toastid) {
             setToastId(false);
             toast.success("Logout Successfully");
           }
           setAccount(null);
+          nav("/");
           localStorage.removeItem("url_shorten_user_name");
         } else if (res.status === 500) {
+          setLoading(false);
           setError(res.message);
           if (toastid) {
             setToastId(false);
@@ -116,10 +131,17 @@ export const UrlContextProvider = ({ children }) => {
           }
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false);
+        // console.log(err);
+      });
   }
   async function registerLogin(email, password) {
+    // console.log("function 6");
+
     // console.log(email, password);
+    // console.log("login");
+    setLoading(true);
     await fetch(`${backendUrl}user/login`, {
       method: "POST",
       headers: {
@@ -136,8 +158,10 @@ export const UrlContextProvider = ({ children }) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.status === 200) {
+          setPaymentStatus(res.userstatus);
+          setLoading(false);
           if (toastid) {
             setToastId(false);
             toast.success("Login Successfully");
@@ -145,26 +169,33 @@ export const UrlContextProvider = ({ children }) => {
           setAccount(res.username);
           setError(null);
           localStorage.setItem("url_shorten_user_name", res.username);
-          localStorage.setItem("url_shorten_user_id", res.userid);
+          localStorage.setItem("url_shortener_user_id", res.userid);
           getUrlstoredData();
           nav("/");
         } else if (res.status === 400) {
+          setLoading(false);
           setError(res.message);
           if (toastid) {
             setToastId(false);
             toast.error("Invalid Input");
           }
         } else if (res.status === 401) {
+          setLoading(false);
           if (toastid) {
             setToastId(false);
             toast.error("Invalid Email or Password");
           }
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false);
+        // console.log(err);
+      });
   }
 
   async function getUrlstoredData() {
+    // console.log("function 7");
+    setLoading(true);
     await fetch(`${backendUrl}user/getUrlData`, {
       method: "POST",
       headers: {
@@ -180,13 +211,18 @@ export const UrlContextProvider = ({ children }) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        setLoading(false);
+        // console.log("urlStored", res);
         setUrlData(res.data);
+        // console.log(urlData);
       })
       .catch((err) => console.log(err));
   }
 
   async function registerSignup(name, email, password) {
+    // console.log("function 8");
+
+    setLoading(true);
     await fetch(`${backendUrl}user/register`, {
       method: "POST",
       headers: {
@@ -207,21 +243,24 @@ export const UrlContextProvider = ({ children }) => {
       .then((res) => {
         // console.log(res.message);
         if (res.status === 200) {
+          setLoading(false);
           if (toastid) {
             setToastId(false);
             toast.success("Account Created Successfully");
           }
           setAccount(name);
           localStorage.setItem("url_shorten_user_name", res.username);
-          localStorage.setItem("url_shorten_user_id", res.userid);
+          localStorage.setItem("url_shortener_user_id", res.userid);
           setError(null);
           nav("/");
         } else if (res.status === 400) {
+          setLoading(false);
           if (toastid) {
             setToastId(false);
             toast.warning("Email already registered..");
           }
         } else if (res.status === 401) {
+          setLoading(false);
           setError(res.message);
           if (toastid) {
             setToastId(false);
@@ -229,10 +268,16 @@ export const UrlContextProvider = ({ children }) => {
           }
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
   }
 
   async function serverConnection() {
+    // console.log("function 9");
+
+    setLoading(true);
     await axios
       .get(`${backendUrl}getcsrf`, {
         headers: {
@@ -241,6 +286,7 @@ export const UrlContextProvider = ({ children }) => {
         withCredentials: true,
       })
       .then((data) => {
+        setLoading(false);
         // console.log(data.data.csrfToken);
         setToken(data.data.csrfToken);
         // postConnection(data.data.csrfToken);
@@ -249,6 +295,8 @@ export const UrlContextProvider = ({ children }) => {
   }
 
   function getCookie(name) {
+    // console.log("function 10");
+
     if (document.cookie && document.cookie !== "") {
       var cookies = document.cookie.split(";");
       var cookieValue;
@@ -265,8 +313,11 @@ export const UrlContextProvider = ({ children }) => {
     return cookieValue;
   }
 
-  async function postConnection() {
+  async function postConnection(urlval) {
+    // console.log("function 11");
+
     // console.log(getCookie("XSRF-TOKEN"));
+    setLoading(true);
     await fetch(`${backendUrl}addUrl`, {
       method: "POST",
       headers: {
@@ -278,21 +329,27 @@ export const UrlContextProvider = ({ children }) => {
       body: JSON.stringify({
         _token: token,
         user_id: userId,
-        url_value: urlValue,
+        url_value: urlval,
       }), // Send CSRF token in the body
     })
       .then((res) => res.json())
       .then((res) => {
         // console.log(res);
+        setLoading(false);
         storeResponseData(res);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
     // setRegistration(true);
   }
 
   // Manual Function generateUserID - storeResponseData(on submit) - storeUrl(store the url in state and localstorage) - getLocalData(get the localstorage url whole data once) -handleDelete
 
   function generateUserId() {
+    // console.log("function 12");
+
     const characters = "0123456789";
     let result = "";
     const charactersLength = characters.length;
@@ -301,11 +358,13 @@ export const UrlContextProvider = ({ children }) => {
       result += characters[randomIndex];
     }
     setUserId(result);
-    localStorage.setItem("url_shorten_user_id", result);
+    localStorage.setItem("url_shortener_user_id", result);
   }
 
   function storeResponseData(response) {
-    // console.log(response);
+    // console.log("function 13");
+
+    console.log(response);
     if (response.status === 200) {
       toast.success("Url Shorten Successfully ");
       const shortUrl = response.link;
@@ -313,38 +372,43 @@ export const UrlContextProvider = ({ children }) => {
     } else if (response.status === 400) {
       toast.error("Invalid Url");
     } else if (response.status === 202) {
-      console.log("login needed");
+      // console.log("login needed");
       setRegistration(true);
+    } else if (response.status === 203) {
+      // navigate("/upgrade");
+      console.log("sdfsdaf");
+      setPaymentStatus(true);
     }
   }
 
   function storeUrl(shortUrl) {
+    // console.log("function 14");
+
+    // console.log("function 2 lin3 357");
     setUrlData((prevData) => [
       ...(Array.isArray(prevData) ? prevData : []),
       {
-        actualUrl: urlValue,
-        shortenUrl: shortUrl,
+        actualurl: shortUrl.actualurl,
+        shortenedurl: shortUrl.shortenedurl,
       },
     ]);
 
-    localStorage.setItem(
-      userId,
-      JSON.stringify([
-        ...(Array.isArray(urlData) ? urlData : []),
-        {
-          actualUrl: urlValue,
-          shortenUrl: shortUrl,
-        },
-      ])
-    );
-  }
-
-  function getLocalData(id) {
-    setUrlData(JSON.parse(localStorage.getItem(id)));
+    // localStorage.setItem(
+    //   userId,
+    //   JSON.stringify([
+    //     ...(Array.isArray(urlData) ? urlData : []),
+    //     {
+    //       actualUrl: urlValue,
+    //       shortenUrl: shortUrl,
+    //     },
+    //   ])
+    // );
   }
 
   async function createGestuser() {
-    console.log(token);
+    // console.log("function 15");
+
+    // console.log(token);
     await fetch(`${backendUrl}user/guestcreate`, {
       method: "POST",
       headers: {
@@ -355,7 +419,7 @@ export const UrlContextProvider = ({ children }) => {
 
       body: JSON.stringify({
         _token: token,
-        user_id: localStorage.getItem("url_shorten_user_id"),
+        user_id: localStorage.getItem("url_shortener_user_id"),
       }), // Send CSRF token in the body
     })
       .then((res) => res.json())
@@ -363,14 +427,18 @@ export const UrlContextProvider = ({ children }) => {
         // console.log(res);
         if (res.status === 200) {
           getUrlstoredData();
-          nav("/");
+          // nav("/");
         }
       })
       .catch((err) => console.log(err));
   }
 
   async function handleDelete(urlPara) {
+    // console.log("function 16");
+
+    // console.log("function 3 line 405");
     // console.log(urlPara);
+    setLoading(true);
     await fetch(`${backendUrl}deleteUrl`, {
       method: "POST",
       headers: {
@@ -386,52 +454,106 @@ export const UrlContextProvider = ({ children }) => {
     })
       .then((res) => res.json())
       .then((res) => {
+        setLoading(false);
         if (res.status === 200) {
           const filterUrl = urlData.filter(
-            (item) => item.shortenUrl !== urlPara
+            (item) => item.shortenedurl !== urlPara
           );
           setUrlData(filterUrl);
-          localStorage.setItem(userId, JSON.stringify(filterUrl));
+          // console.log(filterUrl);
+          // localStorage.setItem(userId, JSON.stringify(filterUrl));
           toast.success("Url Removed Successfully");
         } else if (res.status === 400) {
           toast.warning("Url Not-Found");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
+  }
+
+  async function handlePayment() {
+    // console.log("function 17");
+
+    const stripe = await loadStripe(
+      "pk_test_51PsH3a00rtFTtfAP8UxG9Flee1EummlEkhPxHPbG8l3NdauxhIV2yoqDSEuxXdscuKlvV4HBBGP8smI3PQMf71cF00EQSbAJMp"
+    );
+
+    // Send product info to Laravel backend
+    const data = await fetch(`${backendUrl}payment/stripe`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-XSRF-TOKEN": getCookie("XSRF-TOKEN"),
+      },
+      credentials: "include",
+
+      body: JSON.stringify({
+        _token: token,
+        product_name: "upgrade",
+        product_price: 10,
+        quantity: 1,
+      }), // Send CSRF token in the body
+    })
+      .then((res) => res.json())
+      .then((res) => res);
+
+    // Redirect to Stripe Checkout
+    const result = await stripe.redirectToCheckout({
+      sessionId: data.id,
+    });
+
+    if (result.error) {
+      console.error(result.error.message);
+    }
   }
   // useEffect initial once for server connection and get the user id localstorage
   useEffect(() => {
+    // console.log("useeffect 2");
     serverConnection();
-    const id = localStorage.getItem("url_shorten_user_id");
+    const id = localStorage.getItem("url_shortener_user_id");
     if (id) {
       setAccount(localStorage.getItem("url_shorten_user_name"));
       setUserId(id);
-      getLocalData(id);
+      // getLocalData(id);
+      token !== "" && getUrlstoredData();
+      // console.log(urlData);
     } else {
       generateUserId();
     }
   }, []);
 
   useEffect(() => {
-    token !== "" && createGestuser();
+    // console.log("useeffect 3");
+
+    const item = localStorage.getItem("url_shortener_user_id");
+    // console.log("userid from localstorage", item);
+    if (token !== "" && item !== null) {
+      createGestuser();
+      // console.log("gestusercalled");
+    }
   }, [token]);
 
   return (
     <UrlContext.Provider
       value={{
+        loading,
         account,
         error,
         setError,
         urlValue,
-        handleInput,
         handleSubmit,
         handleDelete,
         handleLogin,
         handleSignup,
         handleLogout,
+        handlePayment,
         urlData,
         backendUrl,
         registration,
+        paymentStatus,
+        setPaymentStatus,
         setRegistration,
       }}
     >

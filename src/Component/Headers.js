@@ -31,7 +31,7 @@ const Headers = () => {
             <>
               <li className="border-bottom">
                 <div className="dropdown-item-text fs-4 fw-normal text-success text-center d-flex align-items-center justify-content-between">
-                  <span className="">{account}</span>
+                  <span className="me-2">{account}</span>
                   <FaUserCheck />
                 </div>
               </li>

@@ -8,7 +8,8 @@ import UrlContext from "../DataContent/UrlContext";
 import { Link } from "react-router-dom";
 
 const Main = () => {
-  const { registration, setRegistration } = useContext(UrlContext);
+  const { registration, setRegistration, paymentStatus, handlePayment } =
+    useContext(UrlContext);
 
   return (
     <div
@@ -18,6 +19,30 @@ const Main = () => {
       <Heading />
       <Form />
       <List />
+      {paymentStatus && (
+        <div
+          className="position-absolute h-100 w-100 d-flex align-items-center justify-content-center"
+          style={{ zIndex: "999", backgroundColor: "#00000087" }}
+        >
+          <div className="card-group gap-3 col-sm-4 ">
+            <div className="card rounded-2 d-flex align-items-center justify-content-center">
+              {/* <img src="" alt="priceImage" /> */}
+              <div className="display-3 fw-semibold p-2">Price$10/-</div>
+              <div className="card-body text-left w-100">
+                <h5 className="card-title">Upgrade to Premium</h5>
+                <p className="card-text">
+                  You can store more than 10 URL in this package.
+                </p>
+              </div>
+              <div className="card-footer d-flex align-items-center justify-content-center w-100">
+                <button className="btn btn-primary" onClick={handlePayment}>
+                  Upgrade
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {registration && (
         <div
           className="position-absolute d-flex justify-content-center align-items-center col-12 h-100"

@@ -39,7 +39,7 @@ const QrCode = ({url}) => {
         </div>
         <div className="text-center">
           <div className="text-center">
-            <div className="model-body">URL : {url}</div>
+            <div className="model-body px-2">URL : {url}</div>
           </div>
           <div className="model-body py-2">
             scan this qr code to redirect the webpage

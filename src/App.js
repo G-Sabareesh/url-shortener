@@ -8,12 +8,14 @@ import Signup from "./Component/Settings/Signup";
 import { ToastContainer } from "react-toastify";
 import { useContext } from "react";
 import UrlContext from "./DataContent/UrlContext";
+import PaymentStatus from "./Component/PaymentStatus";
 
 function Redirect() {
   const { backendUrl } = useContext(UrlContext);
   window.location.href = `${backendUrl}admin`;
 }
 function App() {
+  const { loading } = useContext(UrlContext);
   return (
     <div className="App p-2">
       <ToastContainer
@@ -28,6 +30,22 @@ function App() {
         pauseOnHover
         theme="light"
       />
+      {loading && (
+        <div
+          className="position-absolute d-flex align-items-center justify-content-center flex-column w-100 p-5"
+          style={{ zIndex: "9999" }}
+          // backgroundColor: "#263849"
+        >
+          <div
+            className="spinner-border border-5 text-primary"
+            style={{ width: "4rem", height: "4rem" }}
+            role="status"
+          ></div>
+          {/* <span className="fs-4 text-light mt-2">
+            Please wait, processing your request
+          </span> */}
+        </div>
+      )}
       <div className="fixed-top d-flex justify-content-start  align-items-center flex-column col-12">
         <Headers />
       </div>
@@ -36,6 +54,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/admin" element={<Redirect />} />
+        <Route path="/paymentstatus" element={<PaymentStatus />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
