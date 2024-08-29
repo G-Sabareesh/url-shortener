@@ -5,34 +5,40 @@ import Signup from "./Settings/Signup";
 import { IoSettings } from "react-icons/io5";
 import UrlContext from "../DataContent/UrlContext";
 import { FaUser, FaUserCheck } from "react-icons/fa";
+import { RiUserStarFill } from "react-icons/ri";
 
 const Headers = () => {
-  const { account, handleLogout } = useContext(UrlContext);
+  const { account, handleLogout, userStatus } = useContext(UrlContext);
+  // console.log(userStatus);
   return (
     <nav
       className="d-flex align-items-center navbar col-12"
       style={{ backgroundColor: "rgba(108,117,125,0.31" }}
     >
-      <div className="p-1 px-3">
+      <div className="p-1">
         <a className="navbar-brand text-light rounded-2 p-2" href="/">
           URL Shortener
         </a>
       </div>
+        Home Generate QR Delete All
       <div className="d-flex align-items-center justify-content-center dropdown-center p-1">
         <span
           className="text-light dropdown-toggle px-3 text-center"
-          type="button"
           data-bs-toggle="dropdown"
         >
           <IoSettings size={30} className="m-1" />
         </span>
-        <ul className="dropdown-menu p-2 mt-1 me-1">  
+        <ul className="dropdown-menu p-2 mt-1 me-1">
           {account ? (
             <>
               <li className="border-bottom">
-                <div className="dropdown-item-text fs-4 fw-normal text-success text-center d-flex align-items-center justify-content-between">
+                <div
+                  className={`dropdown-item-text fs-4 fw-normal text-center d-flex align-items-center justify-content-between ${
+                    userStatus == 2 ? "text-success" : "text-warning"
+                  } `}
+                >
                   <span className="me-2">{account}</span>
-                  <FaUserCheck />
+                  {userStatus == 2 ? <FaUserCheck /> : <RiUserStarFill />}
                 </div>
               </li>
               <li

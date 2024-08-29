@@ -15,6 +15,8 @@ export const UrlContextProvider = ({ children }) => {
   const [account, setAccount] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const [userStatus, setUserStatus] = useState(2);
+
   const [paymentStatus, setPaymentStatus] = useState(false);
 
   const [error, setError] = useState();
@@ -36,7 +38,7 @@ export const UrlContextProvider = ({ children }) => {
   const [urlData, setUrlData] = useState([]);
 
   const backendUrl =
-    "https://a7fb-2401-4900-1ce0-6f99-2d26-9b2c-468c-a69d.ngrok-free.app/";
+    "https://6be6-2401-4900-1ce0-6f99-6c25-1753-d1d0-f4cb.ngrok-free.app/";
 
   // console.log("running");
 
@@ -46,11 +48,20 @@ export const UrlContextProvider = ({ children }) => {
     const regExp =
       /^(https?:\/\/|www\.)[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*\.(com|in|org|ngrok-free.app)/;
 
+    const urlReg = /^(https?:\/\/url\.io|url\.io)*\.(com)/;
+
     if (urlval !== "") {
       if (regExp.test(urlval)) {
-        // console.log(urlValue);
-        setUrlValue(urlval);
-        postConnection(urlval);
+        if (urlReg.test(urlval)) {
+          if (toastid) {
+            setToastId(false);
+            toast.error("This is shortened url");
+          }
+        } else {
+          // console.log(urlValue);
+          setUrlValue(urlval);
+          postConnection(urlval);
+        }
       } else {
         if (toastid) {
           setToastId(false);
@@ -120,8 +131,10 @@ export const UrlContextProvider = ({ children }) => {
             toast.success("Logout Successfully");
           }
           setAccount(null);
-          nav("/");
           localStorage.removeItem("url_shorten_user_name");
+          localStorage.removeItem("url_shorten_user_status");
+          localStorage.removeItem("url_shortener_user_id");
+          setUrlData([]);
         } else if (res.status === 500) {
           setLoading(false);
           setError(res.message);
@@ -166,8 +179,11 @@ export const UrlContextProvider = ({ children }) => {
             toast.success("Login Successfully");
           }
           setAccount(res.username);
+          setUserId(res.userid);
           setError(null);
+          setUserStatus(res.userstatus);
           localStorage.setItem("url_shorten_user_name", res.username);
+          localStorage.setItem("url_shorten_user_status", res.userstatus);
           localStorage.setItem("url_shortener_user_id", res.userid);
           getUrlstoredData();
           nav("/");
@@ -205,7 +221,7 @@ export const UrlContextProvider = ({ children }) => {
 
       body: JSON.stringify({
         _token: token,
-        user_id: userId,
+        user_id: localStorage.getItem("url_shortener_user_id"),
       }), // Send CSRF token in the body
     })
       .then((res) => res.json())
@@ -248,7 +264,10 @@ export const UrlContextProvider = ({ children }) => {
             toast.success("Account Created Successfully");
           }
           setAccount(name);
+          setUserStatus(res.userstatus);
+          setUserId(res.userid);
           localStorage.setItem("url_shorten_user_name", res.username);
+          localStorage.setItem("url_shorten_user_status", res.userstatus);
           localStorage.setItem("url_shortener_user_id", res.userid);
           setError(null);
           nav("/");
@@ -288,9 +307,20 @@ export const UrlContextProvider = ({ children }) => {
         setLoading(false);
         // console.log(data.data.csrfToken);
         setToken(data.data.csrfToken);
+        if (toastid) {
+          setToastId(false);
+          toast.success("Please wait we fetch your data");
+        }
         // postConnection(data.data.csrfToken);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setLoading(false);
+        if (toastid) {
+          setToastId(false);
+          toast.error(error.message);
+        }
+        console.log(error);
+      });
   }
 
   function getCookie(name) {
@@ -363,7 +393,7 @@ export const UrlContextProvider = ({ children }) => {
   function storeResponseData(response) {
     // console.log("function 13");
 
-    console.log(response);
+    // console.log(response);
     if (response.status === 200) {
       toast.success("Url Shorten Successfully ");
       const shortUrl = response.link;
@@ -377,6 +407,11 @@ export const UrlContextProvider = ({ children }) => {
       // navigate("/upgrade");
       // console.log("sdfsdaf");
       setPaymentStatus(true);
+    } else if (response.status === 409) {
+      if (toastid) {
+        setToastId(false);
+        toast.warning(response.message);
+      }
     }
   }
 
@@ -507,7 +542,7 @@ export const UrlContextProvider = ({ children }) => {
     if (result.error) {
       console.error(result.error.message);
     }
-    setLoading(false)
+    setLoading(false);
   }
   // useEffect initial once for server connection and get the user id localstorage
   useEffect(() => {
@@ -516,6 +551,7 @@ export const UrlContextProvider = ({ children }) => {
     const id = localStorage.getItem("url_shortener_user_id");
     if (id) {
       setAccount(localStorage.getItem("url_shorten_user_name"));
+      setUserStatus(localStorage.getItem("url_shorten_user_status"));
       setUserId(id);
       // getLocalData(id);
       token !== "" && getUrlstoredData();
@@ -539,6 +575,8 @@ export const UrlContextProvider = ({ children }) => {
   return (
     <UrlContext.Provider
       value={{
+        userStatus,
+        setUserStatus,
         loading,
         account,
         error,

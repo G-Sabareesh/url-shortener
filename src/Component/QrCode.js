@@ -2,7 +2,7 @@ import React from "react";
 
 import { QRCodeSVG } from "qrcode.react";
 
-const QrCode = ({url}) => {
+const QrCode = ({ url }) => {
   return (
     <div className="modal-dialog modal-dialog-centered">
       <div className="modal-content">

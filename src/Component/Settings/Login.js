@@ -55,7 +55,6 @@ const Login = () => {
                 type="password"
                 className="form-control fw-semibold fs-5"
                 placeholder="password"
-                value={password}
                 onChange={(e) => setpassword(e.target.value)}
               />
             </div>

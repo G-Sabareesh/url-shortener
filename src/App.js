@@ -18,18 +18,6 @@ function App() {
   const { loading } = useContext(UrlContext);
   return (
     <div className="App p-2">
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
       {loading && (
         <div
           className="position-absolute d-flex align-items-center justify-content-center flex-column w-100 p-5"
@@ -49,6 +37,18 @@ function App() {
       <div className="fixed-top d-flex justify-content-start  align-items-center flex-column col-12">
         <Headers />
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />

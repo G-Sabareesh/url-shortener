@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import UrlContext from "../../DataContent/UrlContext";
 
 const Signup = () => {
-  const { handleSignup } = useContext(UrlContext);
-  const { registration, setRegistration, error, setError } =
+  const { handleSignup, registration, setRegistration, error, setError } =
     useContext(UrlContext);
 
   const [name, setName] = useState("");
@@ -72,10 +71,9 @@ const Signup = () => {
                 Password
               </span>
               <input
-                type="text"
+                type="password"
                 className="form-control fw-semibold fs-5"
                 placeholder="password"
-                value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
