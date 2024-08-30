@@ -6,6 +6,11 @@
   flex-direction: column;
   height: 100vh;
   width: 100%;
+  overflow-y: auto;
+}
+
+nav{
+  box-shadow: 0px 1px 5px #ffffff35 !important;
 }
 
 .close {
@@ -35,33 +40,41 @@
   color: white;
 }
 .dropdown-menu {
-  --bs-dropdown-min-width: 150px !important;
+  --bs-dropdown-min-width: 120px !important;
+}
+.dropdown-toggle::after {
+  /* color: red !important; */
+}
+.dropdown-hover:hover {
+  color: white !important;
+  background-color: #ff5454 !important;
 }
 .dropdown-menu[data-bs-popper] {
-  right: 0 !important;
+  /* right: 0 !important; */
   left: auto !important;
 }
 .form-control {
   box-shadow: none !important;
+  border: none !important;
 }
 
 .registration-close {
-  color: #3f8cffd1 !important;
+  color: white !important;
   cursor: pointer;
 }
 
 .registration-close:hover {
-  /* background-color: rgba(0, 0, 0, 0.055) !important; */
-  color: #0d6efd !important;
+  background-color: #ff5454 !important;
 }
 .options:hover {
-  background-color: rgba(0, 0, 0, 0.09);
+  background-color: #5096ff30;
+  color: #0d6efd;
 }
 @media (max-width: 450px) {
   .close {
     position: absolute;
-    left: 0 !important;
-    top: -50% !important;
+    left: 2 !important;
+    top: -5% !important;
     border-radius: 50px !important;
   }
   .close:hover::after {
@@ -74,8 +87,8 @@
 @media (max-width: 575px) {
   .close {
     position: absolute;
-    left: -1%;
-    top: 0;
+    left: 3%;
+    top: -4%;
     border-radius: 50px !important;
   }
   .close:hover::after {

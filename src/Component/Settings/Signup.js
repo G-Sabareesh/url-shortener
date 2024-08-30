@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import UrlContext from "../../DataContent/UrlContext";
+import { FaArrowRight } from "react-icons/fa6";
+import { MdOutlineEmail, MdOutlineLock, MdOutlinePerson } from "react-icons/md";
 
 const Signup = () => {
   const { handleSignup, registration, setRegistration, error, setError } =
@@ -17,86 +19,91 @@ const Signup = () => {
   return (
     registration && setRegistration(false),
     (
-      <div className="d-flex justify-content-center align-items-center flex-column p-2 bg-light rounded-2 col-sm-3 col-md-6 col-lg-4">
-        <div className="fs-3 fw-semibold pb-3 border-bottom w-100 text-center">
-          Signup
-        </div>
+      <div className="d-flex justify-content-center align-items-center flex-column p-2 bg-light rounded-2 col-10 col-sm-8 col-md-6 col-lg-3">
+        <img
+          src="https://img.icons8.com/?size=100&id=n9d0Hm43JCPK&format=png&color=000000"
+          alt="url"
+          height={50}
+        />
+        <span className="fs-4">Create your account</span>
         <div className="col-10 mt-3">
-          <div className="mb-3">
-            <div className="input-group">
-              <span
-                className="input-group-text fw-normal fs-5"
-                id="inputGroup-sizing-default"
-              >
-                Name
-              </span>
+          <div className="mb-2">
+            <div className=" input-group border-1 border-bottom border-primary ">
               <input
                 type="text"
-                className="form-control fw-semibold fs-5"
-                placeholder="John"
+                className="form-control fw-semibold fs-6 bg-light"
+                placeholder="name"
                 value={name}
+                style={{ textIndent: "15px" }}
                 onChange={(e) => setName(e.target.value)}
               />
+              <span
+                className="position-absolute"
+                style={{ top: "15%", zIndex: "10" }}
+              >
+                <MdOutlinePerson color="rgba(41,42,46,1)" size={20} />
+              </span>
             </div>
             {error?.name && (
               <span className="fs-6 text-danger">{error.name}</span>
             )}
           </div>
-          <div className="mb-3">
-            <div className="input-group">
-              <span
-                className="input-group-text fw-normal fs-5"
-                id="inputGroup-sizing-default"
-              >
-                Email
-              </span>
+          <div className="mb-2">
+            <div className="position-relative input-group border-1 border-bottom border-primary">
               <input
                 type="text"
-                className="form-control fw-semibold fs-5"
-                placeholder="example@gmail.com"
+                className="form-control fw-semibold fs-6 bg-light"
+                placeholder="email"
                 value={email}
+                style={{ textIndent: "15px" }}
                 onChange={(e) => setEmail(e.target.value)}
               />
+              <span
+                className="position-absolute"
+                style={{ top: "15%", zIndex: "10" }}
+              >
+                <MdOutlineEmail color="rgba(41,42,46,1)" size={20} />
+              </span>
             </div>
             {error?.email && (
               <span className="fs-6 text-danger">{error.email}</span>
             )}
           </div>
-          <div className="mb-3">
-            <div className="input-group">
-              <span
-                className="input-group-text fw-normal fs-5"
-                id="inputGroup-sizing-default"
-              >
-                Password
-              </span>
+          <div className="mb-2">
+            <div className="position-relative input-group border-1 border-bottom border-primary">
               <input
                 type="password"
-                className="form-control fw-semibold fs-5"
+                className="form-control fw-semibold fs-6 bg-light"
                 placeholder="password"
+                style={{ textIndent: "15px" }}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <span
+                className="position-absolute"
+                style={{ top: "15%", zIndex: "10" }}
+              >
+                <MdOutlineLock color="rgba(41,42,46,1)" size={20} />
+              </span>
             </div>
             {error?.password && (
               <span className="fs-6 text-danger">{error.password}</span>
             )}
           </div>
-          <div className="d-flex justify-content-between align-items-center">
-            <span className="fs-6 fw-semibold">
-              Existing User :{" "}
-              <Link to="/login" className="text-decoration-none">
-                Login
-              </Link>
-            </span>
-            <button
-              type="button"
-              className="btn btn-primary fw-semibold"
-              onClick={() => handleSignup(name, email, password)}
-            >
-              Signup
-            </button>
-          </div>
         </div>
+        <button
+          type="button"
+          className="btn btn-primary fw-semibold col-10 mt-3  rounded-1"
+          onClick={() => handleSignup(name, email, password)}
+        >
+          Signup
+        </button>
+        <span className="text-muted mt-3 ">
+          {/* New User :{" "} */}
+          <Link to="/login" className="text-decoration-none">
+            Login your account
+            <FaArrowRight className="ms-1 fw-lighter" />
+          </Link>
+        </span>
       </div>
     )
   );

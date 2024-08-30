@@ -14,7 +14,7 @@ const Form = () => {
       <div className="row col-12 d-flex justify-content-center align-items-center flex-wrap p-2 gap-3">
         <input
           type="text"
-          className=" h-50 col-lg-8 col-md-6 col-sm-10 py-2 rounded fw-semibold fs-5"
+          className=" h-50 col-lg-8 col-md-6 col-sm-10 py-3 rounded-1 fw-normal fs-5"
           placeholder="Enter the URL here..."
           style={{ outline: "none", border: "none" }}
           value={inputval}
@@ -23,7 +23,7 @@ const Form = () => {
           }}
         ></input>
         <button
-          className="h-50 col-lg-3 col-md-4 col-sm-10 text-center btn btn-primary btn-lg p-2 fs-5 fw-semibold rounded"
+          className="h-50 col-lg-3 col-md-4 col-sm-10 text-center btn btn-primary p-2 py-3 fs-5 fw-semibold rounded-1"
           type="button"
           id="button-addon2"
           onClick={() => {

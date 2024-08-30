@@ -38,7 +38,7 @@ export const UrlContextProvider = ({ children }) => {
   const [urlData, setUrlData] = useState([]);
 
   const backendUrl =
-    "https://6be6-2401-4900-1ce0-6f99-6c25-1753-d1d0-f4cb.ngrok-free.app/";
+    "https://69b5-2401-4900-1ce0-6f99-6de1-d2d5-8b90-a509.ngrok-free.app/";
 
   // console.log("running");
 

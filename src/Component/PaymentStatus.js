@@ -20,10 +20,11 @@ const PaymentStatus = () => {
     if (status === "success") {
       setPaymentStatus(false);
       setUserStatus(3);
+      localStorage.setItem("url_shorten_user_status", 3);
       setPayment(1);
       setTimeout(() => {
         nav("/");
-      }, 3000);
+      }, 4000);
     } else {
       setPaymentStatus(false);
       setPayment(2);

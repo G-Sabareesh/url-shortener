@@ -26,20 +26,20 @@ const ListContent = ({ item }) => {
   return (
     <>
       <div
-        className="position-relative d-flex justify-content-center align-items-center col-12 col-sm-12 col-md-12 col-lg-11"
+        className="position-relative d-flex justify-content-center align-items-center col-12 col-sm-12 col-md-12 col-lg-11 "
         style={{ minHeight: "70px" }}
       >
         <div
-          className="d-flex justify-content-evenly align-items-center col-11 col-sm-9 col-md-9 col-lg-11  border border-success rounded bg-light"
+          className="d-flex justify-content-evenly align-items-center col-10 col-sm-9 col-md-9 col-lg-11  border border-success rounded-1 bg-light"
           style={{ minHeight: "100%" }}
         >
           <div className="listcontent d-flex flex-wrap justify-content-between col-9 col-sm-9 col-md-9 col-lg-10 flex-column flex-sm-column flex-md-row flex-lg-row">
             <div className="actualurl d-flex flex-wrap text-wrap align-items-center justify-content-start col-12 col-sm-12 col-md-12 col-lg-8 overflow-hidden p-1">
-              <span className="text-truncate fs-5 fw-semibold">
+              <span className="text-truncate fs-5 ps-2 fw-semibold text-muted">
                 {item.actualurl}
               </span>
             </div>
-            <div className="d-flex flex-wrap justify-content-lg-end justify-content-md-start justify-content-sm-start align-items-center col-sm-12 col-md-12 col-lg-4 overflow-hidden p-1">
+            <div className="d-flex flex-wrap justify-content-lg-end justify-content-md-start justify-content-sm-start align-items-center col-sm-12 col-md-12 col-lg-4 overflow-hidden p-2 p-sm-2">
               <a
                 href={backendUrl + item.shortenedurl}
                 rel="noopener noreferrer"
@@ -52,27 +52,27 @@ const ListContent = ({ item }) => {
           </div>
           <div className="d-flex justify-content-evenly align-items-center flex-wrap flex-column flex-sm-column flex-md-row col-3 col-sm-3 col-md-3 col-lg-2">
             <div
-              className="options col-sm-6 col-md-4  d-flex justify-content-center align-items-center text-center p-1 m-lg-2 p-lg-1 p-sm-1 rounded-2"
+              className="options col-sm-6 col-md-4  d-flex justify-content-center align-items-center text-center m-1 p-1 m-lg-2 p-lg-1 p-sm-1 p-md-1 rounded-2"
               title="QR Code"
               style={{ cursor: "pointer" }}
               onClick={() => {
                 setQrclick(true);
               }}
             >
-              <BsQrCode size={30} />
+              <BsQrCode size={28} />
             </div>
             <div
-              className="options col-sm-6 col-md-4 d-flex justify-content-center align-items-center text-center m-lg-2 p-1 p-lg-1 p-sm-1 rounded-2"
+              className="options col-sm-6 col-md-4 d-flex justify-content-center align-items-center text-center m-1 m-lg-2 p-1 p-lg-1 p-sm-1 p-md-1 rounded-2"
               title="Copy"
               style={{ cursor: "pointer" }}
               onClick={copyFunction}
             >
               {copyColor ? (
                 <>
-                  <span className="text-success fs-5 fw-semibold">Copied</span>
+                  <span className="text-success fs-6 fw-semibold">Copied</span>
                 </>
               ) : (
-                <FaRegCopy size={30} />
+                <FaRegCopy size={28} />
               )}
             </div>
           </div>
