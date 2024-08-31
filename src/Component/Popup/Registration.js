@@ -24,7 +24,7 @@ const Registration = () => {
             alt="Link"
           />
           <span className="mt-2 mb-2 fs-5 fw-semibold">Need more links?</span>
-          <p className="text-center" style={{width:'90%'}}>Upgrade your account for more !!, Sign up for free now and unlock the features with out free plan</p>
+          <p className="text-center" style={{width:'90%'}}>Upgrade your account for more !, Sign up for free now and unlock the features with our free plan</p>
           <p className="w-100 text-center">Login if you already have an account <br />or<br /> Click signup to join</p>
         <div className="d-flex align-item-center justify-content-evenly col-10 py-2">
           <Link

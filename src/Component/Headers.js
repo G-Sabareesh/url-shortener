@@ -21,11 +21,12 @@ const Headers = () => {
           className="d-flex justify-content-center aling-items-center py-2 text-decoration-none"
         >
           <img
-            src="https://img.icons8.com/?size=100&id=EvhyZpKOoV4z&format=png&color=000000"
+            src="https://img.icons8.com/?size=100&id=n9d0Hm43JCPK&format=png&color=000000"
             alt="logo"
-            height={35}
+            height={38}
+            className="logo-img"
           />
-          <span className="fs-4 fw-bold fst-italic text-light px-2">
+          <span className="logo fs-4 fw-bold fst-italic text-light px-2">
             Url Shortener
           </span>
         </Link>
@@ -38,7 +39,7 @@ const Headers = () => {
         >
           <span className="px-2">{account ? account : "Guest"}</span>
         </span>
-        <ul className="dropdown-menu dropdown-center mt-3 me-1 p-1 rounded-1">
+        <ul className="dropdown-menu dropdown-center col-10 mt-3 me-1 p-1 rounded-1">
           {account ? (
             <>
               <li
@@ -49,7 +50,7 @@ const Headers = () => {
                 Logout
               </li>
               {userStatus == 3 && (
-                <li className="fs-5 fw-semibold fst-italic text-primary rounded-1 text-primary border-top p-2 d-flex align-items-center justify-content-center">
+                <li className="fs-5 fw-semibold fst-italic rounded-1 text-primary border-top p-2 d-flex align-items-center justify-content-center">
                   Premium{" "}
                   <MdOutlineWorkspacePremium
                     className="text-primary"

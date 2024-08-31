@@ -48,6 +48,7 @@ function App() {
         draggable
         pauseOnHover
         theme="light"
+        className="mt-5"
       />
       <Routes>
         <Route path="/" element={<Main />} />

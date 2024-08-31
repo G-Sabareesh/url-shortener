@@ -27,6 +27,11 @@ export const UrlContextProvider = ({ children }) => {
 
   const [toastid, setToastId] = useState(true);
 
+  const emailReg =
+    /([A-Za-z0-9]|([A-Za-z0-9]+\.[A-Za-z0-9]))\w+(@gmail.com|@email.com)$/;
+
+  // const passwordReg = /^(?=.*\d.*)(?=.*[a-zA-Z].*)(?=.*[!#\@$%&\?].*).{8}$/;
+
   useEffect(() => {
     // console.log("useeffect 1");
 
@@ -38,7 +43,7 @@ export const UrlContextProvider = ({ children }) => {
   const [urlData, setUrlData] = useState([]);
 
   const backendUrl =
-    "https://69b5-2401-4900-1ce0-6f99-6de1-d2d5-8b90-a509.ngrok-free.app/";
+    "https://1253-2401-4900-1ce2-7dbe-c867-4cf4-6b70-f3c1.ngrok-free.app/";
 
   // console.log("running");
 
@@ -81,13 +86,48 @@ export const UrlContextProvider = ({ children }) => {
 
     // console.log("ce", email, password);
     if (email === "" || password === "") {
+      setError(null);
       if (toastid) {
         setToastId(false);
         toast.error("Please fill the fields");
-        setError(null);
+
+        // setError({
+        //   email: "This field is required",
+        //   password: "This field is required",
+        // });
+      }
+      if (email === "") {
+        setError({
+          email: "This field is required",
+        });
+      }
+      if (password === "") {
+        setError((prev) => ({
+          ...prev,
+          password: "This field is required",
+        }));
       }
     } else {
-      registerLogin(email, password);
+      setError(null);
+      if (emailReg.test(email)) {
+        // if (passwordReg.test(password)) {
+        registerLogin(email, password);
+        // } else {
+        //   if (toastid) {
+        //     setToastId(false);
+        //     toast.error("Password should be 8 character");
+        //     setError({
+        //       password: "Atleast one (A-Z) and (a-z) and (0-9) and (!#@$%&?)",
+        //     });
+        //   }
+        // }
+      } else {
+        if (toastid) {
+          setToastId(false);
+          toast.error("Invalid Eamil");
+          setError({ email: "Please check your email" });
+        }
+      }
     }
   }
 
@@ -98,10 +138,49 @@ export const UrlContextProvider = ({ children }) => {
       if (toastid) {
         setToastId(false);
         toast.error("Please fill the fields");
-        setError(null);
+        // setError({
+        //   name: "This field is required",
+        //   email: "This field is required",
+        //   password: "This field is required",
+        // });
+      }
+      if (name === "") {
+        setError({
+          name: "This field is required",
+        });
+      }
+      if (email === "") {
+        setError({
+          email: "This field is required",
+        });
+      }
+      if (password === "") {
+        setError((prev) => ({
+          ...prev,
+          password: "This field is required",
+        }));
       }
     } else {
-      registerSignup(name, email, password);
+      setError(null);
+      if (emailReg.test(email)) {
+        // if (passwordReg.test(password)) {
+        registerSignup(name, email, password);
+        // } else {
+        //   if (toastid) {
+        //     setToastId(false);
+        //     toast.error("Password should be 8 character");
+        //     setError({
+        //       password: "Atleast one (A-Z) and (a-z) and (0-9) and (!#@$%&?)",
+        //     });
+        //   }
+        // }
+      } else {
+        if (toastid) {
+          setToastId(false);
+          toast.error("Invalid Eamil");
+          setError({ email: "Please check your email" });
+        }
+      }
     }
   }
 
@@ -236,6 +315,7 @@ export const UrlContextProvider = ({ children }) => {
 
   async function registerSignup(name, email, password) {
     // console.log("function 8");
+    // console.log("sdfsdf", localStorage.getItem('url_shortener_user_id'));
 
     setLoading(true);
     await fetch(`${backendUrl}user/register`, {
@@ -248,7 +328,7 @@ export const UrlContextProvider = ({ children }) => {
 
       body: JSON.stringify({
         _token: token,
-        user_id: userId,
+        user_id: localStorage.getItem("url_shortener_user_id"),
         name: name,
         email: email,
         password: password,
@@ -307,10 +387,10 @@ export const UrlContextProvider = ({ children }) => {
         setLoading(false);
         // console.log(data.data.csrfToken);
         setToken(data.data.csrfToken);
-        if (toastid) {
-          setToastId(false);
-          toast.success("Please wait we fetch your data");
-        }
+        // if (toastid) {
+        //   setToastId(false);
+        //   toast.success("Please wait we fetch your data");
+        // }
         // postConnection(data.data.csrfToken);
       })
       .catch((error) => {
@@ -547,17 +627,26 @@ export const UrlContextProvider = ({ children }) => {
   // useEffect initial once for server connection and get the user id localstorage
   useEffect(() => {
     // console.log("useeffect 2");
-    serverConnection();
     const id = localStorage.getItem("url_shortener_user_id");
-    if (id) {
-      setAccount(localStorage.getItem("url_shorten_user_name"));
-      setUserStatus(localStorage.getItem("url_shorten_user_status"));
-      setUserId(id);
-      // getLocalData(id);
-      token !== "" && getUrlstoredData();
-      // console.log(urlData);
-    } else {
-      generateUserId();
+    const enterUrl = window.location.href;
+    // && registration === true
+    if (
+      enterUrl.split("/").pop() !== "admin" &&
+      enterUrl.split("/").pop() !== "signup" &&
+      enterUrl.split("/").pop() !== "login"
+    ) {
+      // console.log('asfd')
+      serverConnection();
+      if (id) {
+        setAccount(localStorage.getItem("url_shorten_user_name"));
+        setUserStatus(localStorage.getItem("url_shorten_user_status"));
+        setUserId(id);
+        // getLocalData(id);
+        token !== "" && getUrlstoredData();
+        // console.log(urlData);
+      } else {
+        generateUserId();
+      }
     }
   }, []);
 

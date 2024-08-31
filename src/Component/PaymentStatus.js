@@ -24,7 +24,7 @@ const PaymentStatus = () => {
       setPayment(1);
       setTimeout(() => {
         nav("/");
-      }, 4000);
+      }, 3000);
     } else {
       setPaymentStatus(false);
       setPayment(2);
@@ -36,8 +36,8 @@ const PaymentStatus = () => {
 
   return (
     <>
-      {payment === 2 && <PaymentFailed />}
       {payment === 1 && <PaymentSuccess />}
+      {payment === 2 && <PaymentFailed />}
     </>
   );
 };

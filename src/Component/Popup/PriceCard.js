@@ -17,12 +17,12 @@ const PriceCard = () => {
           <span className="text-center text-light px-3 fs-5 fw-semibold  fst-italic">
             Upgrade to Premium
           </span>
-            <span
-              className="registration-close ms-auto p-1 rounded-pill ms-auto me-2"
-              onClick={() => setPaymentStatus(false)}
-            >
-              <IoClose size={28} />
-            </span>
+          <span
+            className="price-close ms-auto p-1 rounded-pill ms-auto me-2"
+            onClick={() => setPaymentStatus(false)}
+          >
+            <IoClose size={28} />
+          </span>
         </div>
         <div className="d-flex align-items-center justify-content-center flex-column">
           <img

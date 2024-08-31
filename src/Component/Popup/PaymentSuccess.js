@@ -12,10 +12,10 @@ const Payment = () => {
         </span>
         <div className="d-flex align-items-center justify-content-center flex-column">
           <img
-            src="https://cdn.dribbble.com/users/1751799/screenshots/5512482/check02.gif"
+            src="https://img.icons8.com/?size=100&id=70yRC8npwT3d&format=png&color=000000"
             alt="priceImage"
             className="py-2"
-            height={180}
+            height={150}
           />
           <div className="fs-5 fw-semibold text-center ">
             Payment has been processed successfully.

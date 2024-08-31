@@ -8,17 +8,16 @@ const PaymentFailed = () => {
     >
       <div className="d-flex justify-content-center align-items-center flex-column col-10 col-sm-6 col-md-5 col-lg-3 rounded-2 bg-white">
         <span
-          className="w-100 text-center text-light  fs-5 fw-semibold py-2 fst-italic rounded-top"
-          style={{ backgroundColor: "rgb(255 125 129)" }}
+          className="w-100 text-center text-light  fs-5 fw-semibold py-2 fst-italic rounded-top bg-danger"
         >
           Payment Failed
         </span>
         <div className="d-flex align-items-center justify-content-center flex-column">
           <img
-            src="https://cdn.dribbble.com/users/251873/screenshots/9388228/error-img.gif"
+            src="https://img.icons8.com/?size=100&id=fYgQxDaH069W&format=png&color=000000"
             alt="priceImage"
             className="py-2"
-            height={180}
+            height={150}
           />
           <div className="fs-5 fw-semibold text-center ">
             Payment hasn't been processed successfully.

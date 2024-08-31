@@ -8,6 +8,8 @@ import { QRCodeSVG } from "qrcode.react";
 
 import UrlContext from "../DataContent/UrlContext";
 
+import { FaRegCheckCircle } from "react-icons/fa";
+
 const ListContent = ({ item }) => {
   const [copyColor, setCopyColor] = useState(false);
   const { backendUrl, handleDelete } = useContext(UrlContext);
@@ -30,7 +32,7 @@ const ListContent = ({ item }) => {
         style={{ minHeight: "70px" }}
       >
         <div
-          className="d-flex justify-content-evenly align-items-center col-10 col-sm-9 col-md-9 col-lg-11  border border-success rounded-1 bg-light"
+          className="d-flex justify-content-evenly align-items-center col-11 col-sm-9 col-md-9 col-lg-11  border border-success rounded-1 bg-light"
           style={{ minHeight: "100%" }}
         >
           <div className="listcontent d-flex flex-wrap justify-content-between col-9 col-sm-9 col-md-9 col-lg-10 flex-column flex-sm-column flex-md-row flex-lg-row">
@@ -52,7 +54,7 @@ const ListContent = ({ item }) => {
           </div>
           <div className="d-flex justify-content-evenly align-items-center flex-wrap flex-column flex-sm-column flex-md-row col-3 col-sm-3 col-md-3 col-lg-2">
             <div
-              className="options col-sm-6 col-md-4  d-flex justify-content-center align-items-center text-center m-1 p-1 m-lg-2 p-lg-1 p-sm-1 p-md-1 rounded-2"
+              className="options col-sm-6 col-md-4  d-flex justify-content-center align-items-center text-center m-1 p-1  rounded-2"
               title="QR Code"
               style={{ cursor: "pointer" }}
               onClick={() => {
@@ -62,14 +64,14 @@ const ListContent = ({ item }) => {
               <BsQrCode size={28} />
             </div>
             <div
-              className="options col-sm-6 col-md-4 d-flex justify-content-center align-items-center text-center m-1 m-lg-2 p-1 p-lg-1 p-sm-1 p-md-1 rounded-2"
+              className="options col-5 col-sm-6 col-md-4 d-flex justify-content-center align-items-center text-center m-1 p-1 rounded-2"
               title="Copy"
               style={{ cursor: "pointer" }}
               onClick={copyFunction}
             >
               {copyColor ? (
                 <>
-                  <span className="text-success fs-6 fw-semibold">Copied</span>
+                  <FaRegCheckCircle size={28} className="text-success success"/>
                 </>
               ) : (
                 <FaRegCopy size={28} />
@@ -91,7 +93,7 @@ const ListContent = ({ item }) => {
           style={{ zIndex: "999", backgroundColor: "#00000087", top: "0" }}
         >
           <div
-            className="d-flex justify-content-center align-items-center flex-column col-10 col-sm-6 col-md-5 col-lg-4 rounded-2 p-1"
+            className="d-flex justify-content-center align-items-center flex-column col-10 col-sm-6 col-md-5 col-lg-3 rounded-2 p-1"
             style={{ backgroundColor: "whitesmoke" }}
           >
             <div className="d-flex align-items-center justify-content-between w-100">
